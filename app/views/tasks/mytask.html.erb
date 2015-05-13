@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My task</title>
+</head>
+<body>
+<h1>Tareas</h1>
+<div class="row">
+<div class="small-12 large-6 columns">
+<h2>Tareas creadas por mi</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Time</th>
+      <th>Start date</th>
+      <th>Finish date</th>
+      <th>User</th>
+      <th>Finished</th>
+      <th>Responsable</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+    <% if task.user_id == current_user.id %>
+    <tr>
+        <td><%= task.title %></td>
+        <td><%= task.time %></td>
+        <td><%= task.start_date %></td>
+        <td><%= task.finish_date %></td>
+        <td><%= task.user.full_name %></td>
+        <td><%= task.finished %></td>
+        <td><%= task.user_res %></td>
+        <% if user_signed_in?%>
+        <td><%= link_to 'Edit', task %></td>
+        <% end %>
+    </tr>
+    
+    <% end %>
+  </tbody>
+  <% end %>
+</table>
+</div>
+<div class="small-12 large-6 columns">
+<h2>Tareas En las q soy responsable</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Time</th>
+      <th>Start date</th>
+      <th>Finish date</th>
+      <th>User</th>
+      <th>Finished</th>
+      <th>Responsable</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+    <% if task.user_res == current_user.id %>
+    <tr>
+        <td><%= task.title %></td>
+        <td><%= task.time %></td>
+        <td><%= task.start_date %></td>
+        <td><%= task.finish_date %></td>
+        <td><%= task.user.full_name %></td>
+        <td><%= task.finished %></td>
+        <td><%= task.user_res %></td>
+        <% if user_signed_in?%>
+        <td><%= link_to 'Edit', task %></td>
+        <% end %>
+
+      </tr>
+      
+    <% end %>
+  </tbody>
+  <% end %>
+</table>
+</div>
+
+</div>
+<br>
+  <% if user_signed_in?%>
+    <%= link_to 'New Task', new_task_path, class:'button' %>
+  <% end %>
+</body>
