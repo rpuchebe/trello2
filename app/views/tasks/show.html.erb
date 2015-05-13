@@ -34,5 +34,10 @@
   <strong>Finished:</strong>
   <%= @task.finished %>
 </p>
-
+<p>
+  <strong>user_res:</strong>
+  <%= @task.user.name %>
+</p>
+<% if user_signed_in?%>
 <%= link_to 'Edit', edit_task_path(@task), class:'button' %>
+<% end %>
