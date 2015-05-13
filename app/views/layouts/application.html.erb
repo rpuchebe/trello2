@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= content_for?(:title) ? yield(:title) : "Trello" %></title>
+
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <nav class="top-bar" data-topbar>
+      <ul class="title-area">
+        <li class="name">
+          <h1><a href="<%=root_path%>">Trello</a></h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
+  
+    <section class="top-bar-section">
+      <!-- Left Nav Section -->
+      <ul class="left">
+          <li class="divider"></li>
+          <li><%=link_to 'Tasks', tasks_path%></li>
+          <li><%=link_to 'Users', users_path%></li>
+        </ul>
+      <!-- right Nav Section -->
+        <ul class="right">
+        <li class="divider"></li>
+        <%if user_signed_in?%>
+        <%if current_user.avatar.file?%>
+            <li><%= image_tag current_user.avatar.url(:thumb) %></li>
+        <%end%>
+            <li><%=link_to current_user.full_name, edit_user_registration_path%></li>
+            <li><%=link_to 'Log out', destroy_user_session_path, method: :delete%></li>
+          <%else%>
+            <li><%=link_to 'Sign Up', new_user_registration_path%></li>
+            <li><%=link_to 'Sign In', new_user_session_path%></li>
+          <%end%>
+        </ul>
+    </section>
+  </nav>
+
+<!--for devise
+   <p class="notice"><%= notice %></p>
+   <p class="alert"><%= alert %></p>-------------->
+
+    <div class="row">
+      <div class="columns large-12">
+      <% flash.each do |type, message| %>
+      <div data-alert class="alert-box radius <%= flass_class type%>" >
+      <%=message %>
+      </div>
+      <% end %>
+      <%= yield %>
+      </div>
+    </div>
+
+    <%= javascript_include_tag "application" %>
+  </body>
+</html>
