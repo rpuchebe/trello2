@@ -9,6 +9,11 @@ class TasksController < ApplicationController
     respond_with(@tasks)
   end
 
+   def mytask
+    @tasks = Task.all
+    respond_with(@tasks)
+    end
+
   def show
     respond_with(@task)
   end
